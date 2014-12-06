@@ -7,7 +7,7 @@ bleno.on('stateChange', function(state) {
 
   if (state === 'poweredOn') {
     bleno.startAdvertising('This is a paylaod',
-	['e2c56db5dffb48d2b060d0f5a71096e'])
+	['e2c56db5dffb48d2b060d0f5a71096e0'])
   } else {
     bleno.stopAdvertising();
   }

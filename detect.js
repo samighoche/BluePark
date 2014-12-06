@@ -1,24 +1,8 @@
 var noble = require('noble');
 var request = require('request');
 
-request('http://blepark.azurewebsites.net/chat', function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body) // Print the google web page.
-  }
-})
-
-request.post(
-    'http://blepark.azurewebsites.net/chat',
-    { form: { key: 'value' } },
-    function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            console.log(body)
-        }
-    }
-);
-
 var dict = {};
-var k = 10
+var k = 10;
 noble.on('stateChange', function(state) {
 	if (state === 'poweredOn' ) {
 		noble.startScanning([],true);
