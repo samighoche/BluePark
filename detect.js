@@ -1,7 +1,7 @@
 var noble = require('noble');
 
 var dict = {};
-
+var k = 10
 noble.on('stateChange', function(state) {
 	if (state === 'poweredOn' ) {
 		noble.startScanning([],true);
@@ -11,34 +11,36 @@ noble.on('stateChange', function(state) {
 	}
 });
 
-noble.on('discover', function(peripheral) {
-console.log('Discovered Peripheral : ' + peripheral.uuid + ' RSSI:' + peripheral.rssi);
-
-if (peripheral.uuid in dict){
-	dict[peripheral.uuid].count = dict[peripheral.uuid].count + 1;
-	dict[peripheral.uuid].average = (dict[peripheral.uuid].average*(dict[peripheral.uuid].count-1) + peripheral.rssi)/dict[peripheral.uuid].count;
-}
-else {
-	dict[peripheral.uuid] = {'average':peripheral.rssi, 'count':1};
-}
-console.log(dict)
-/*peripheral.connect(function(error){
-	if (error == undefined ){
-		console.log(peripheral.uuid + ' RSSI:' + peripheral.rssi );
-	} else {
-		console.log(peripheral.uuid + ' RSSI:' + peripheral.rssi + ' Connecting, Error : ' + error); 
+function is_done() {
+	for (uuid in dict) {
+		if (dict[uuid].count < k) {
+			return false;
+		}
 	}
-}); */
-/*peripheral.updateRssi(function(error, rssi){
-console.log(peripheral.uuid + ' RSSI:' + peripheral.rssi+ ' update RSSI + ' + rssi + ' : Error :' + error);
-});*/
+	return true;
+}
 
-/*peripheral.on('connect',function(){
-	console.log(peripheral.uuid + ' RSSI:' + peripheral.rssi+ ' Has conected');
-}); */
-/*peripheral.on('rssiUpdate',function(rssi){
-console.log(peripheral.uuid + ' RSSI updated : ' + rssi);
+noble.on('discover', function(peripheral) {
+	
+	if (peripheral.uuid in dict){
+		dict[peripheral.uuid].list.push(peripheral.rssi);
+		dict[peripheral.uuid].count = dict[peripheral.uuid].count + 1;
+		if (dict[peripheral.uuid].count > k) {
+			dict[peripheral.uuid].average = (dict[peripheral.uuid].average*k - dict[peripheral.uuid].list[dict[peripheral.uuid].count-k-1] + peripheral.rssi)/k;
+		}
+		else {
+			dict[peripheral.uuid].average = (dict[peripheral.uuid].average*(dict[peripheral.uuid].count-1) + peripheral.rssi)/dict[peripheral.uuid].count;	
+		}
+		
+	}
+	else {
+		dict[peripheral.uuid] = {'list': [peripheral.rssi], 'average':peripheral.rssi, 'count':1};
+	}
+	console.log('Discovered Peripheral : ' + peripheral.uuid + 'Name : ' + peripheral.advertisement.localname + ' RSSI:' + peripheral.rssi + 'count:' + dict[peripheral.uuid].count);
 
-});
-*/
+	if (is_done() == true){
+		console.log(dict);
+		noble.stopScanning();
+		/* send to server */
+	}
 });
