@@ -6,8 +6,10 @@ bleno.on('stateChange', function(state) {
   console.log('on -> stateChange: ' + state);
 
   if (state === 'poweredOn') {
-    bleno.startAdvertising('This is a paylaod',
-	['e2c56db5dffb48d2b060d0f5a71096e0'])
+  	var buffer = new Buffer("I'm a string!", "utf-8")
+  	var scandata = new Buffer()
+    bleno.startAdvertising(buffer,
+	scandata)
   } else {
     bleno.stopAdvertising();
   }

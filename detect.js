@@ -37,7 +37,7 @@ noble.on('discover', function(peripheral) {
 	else {
 		dict[peripheral.uuid] = {'list': [peripheral.rssi], 'average':peripheral.rssi, 'count':1};
 	}
-	console.log('Discovered Peripheral : ' + peripheral.uuid + 'Name : ' + peripheral.advertisement.localname + ' RSSI:' + peripheral.rssi + 'count:' + dict[peripheral.uuid].count);
+	console.log('Discovered Peripheral : ' + peripheral.uuid + 'Data : ' + peripheral.advertisement.manufacturerData + ' RSSI:' + peripheral.rssi + 'count:' + dict[peripheral.uuid].count);
 
 	if (is_done() == true){
 		console.log(dict);
