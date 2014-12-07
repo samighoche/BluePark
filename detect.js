@@ -2,6 +2,7 @@ var noble = require('noble');
 var request = require('request');
 var beacon_name = "1"
 var directions = {"10000000000000000000000000000000": "up", "20000000000000000000000000000000": "down"}
+last_direction = {}
 var dict = {};
 var k = 10;
 
@@ -70,9 +71,11 @@ noble.on('discover', function(peripheral) {
 		// this is pushing some data from this client to the server with event described by 'detect'
 		// data is JSON dict style
 		name = peripheral.advertisement.localName;
-
-		socket.emit('detect', {'beacon': beacon_name, 'car_name': name, 'average_rssi': dict[peripheral.uuid].average, 'direction': peripheral.advertisement.serviceUuids[0]});
-		dict = {}
+		if (!(name in last_direction) || last_direction[name] != peripheral.advertisement.serviceUuids[0]) {
+			socket.emit('detect', {'beacon': beacon_name, 'car_name': name, 'average_rssi': dict[peripheral.uuid].average, 'direction': peripheral.advertisement.serviceUuids[0]});
+			last_direction[name] = peripheral.advertisement.serviceUuids[0]
+			dict = {}
+		}	
 		//noble.startScanning([],true);
 		
 
