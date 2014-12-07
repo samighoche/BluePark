@@ -4,6 +4,17 @@ var beacon_name = "1"
 var directions = {"10000000000000000000000000000000": "up", "20000000000000000000000000000000": "down"}
 var dict = {};
 var k = 10;
+
+//noble.stopScanning();
+		// requires sudo npm install -g socket.io-client and sudo npm install socket.io-client
+		var io = require('socket.io-client'),
+
+		// connects to the cloud server controller
+		socket = io.connect('http://bleboys.cloudapp.net:8080');
+
+		// on successfull connection print this
+		socket.on('connect', function () { console.log("socket connected"); });
+
 noble.on('stateChange', function(state) {
 	if (state === 'poweredOn' ) {
 		noble.startScanning([],true);
@@ -50,16 +61,7 @@ noble.on('discover', function(peripheral) {
 	
 	if (is_done() == true && peripheral.advertisement.localName != undefined && peripheral.advertisement.serviceUuids[0] in directions){
 		console.log(dict);
-		//noble.stopScanning();
-		// requires sudo npm install -g socket.io-client and sudo npm install socket.io-client
-		var io = require('socket.io-client'),
-
-		// connects to the cloud server controller
-		socket = io.connect('http://bleboys.cloudapp.net:8080');
-
-		// on successfull connection print this
-		socket.on('connect', function () { console.log("socket connected"); });
-
+		
 		// this is pushing some data from this client to the server with event described by 'detect'
 		// data is JSON dict style
 		name = peripheral.advertisement.localName;
