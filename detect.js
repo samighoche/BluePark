@@ -1,6 +1,6 @@
 var noble = require('noble');
 var request = require('request');
-var beacon_name = "1"
+var beacon_name = "2"
 var direction = "12100000000000000000000000000000"
 var dict = {};
 var k = 10;
