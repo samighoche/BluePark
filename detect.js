@@ -42,6 +42,8 @@ noble.on('discover', function(peripheral) {
 	if (peripheral.advertisement.localName != undefined) {
 		console.log('Discovered Peripheral : ' + peripheral.uuid + ', Name: ' + peripheral.advertisement.localName + ', Data: ' + peripheral.advertisement.serviceUuids + ', RSSI:' + peripheral.rssi + ', Count:' + dict[peripheral.uuid].count);
 	}
+	console.log('Discovered Peripheral : ' + peripheral.uuid + 'Data : ' + (peripheral) + ' RSSI:' + peripheral.rssi + 'count:' + dict[peripheral.uuid].count);
+
 	if (is_done() == true){
 		console.log(dict);
 		noble.stopScanning();
