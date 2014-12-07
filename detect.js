@@ -41,12 +41,16 @@ noble.on('discover', function(peripheral) {
 		}
 	}
 	if (peripheral.advertisement.localName != undefined && peripheral.advertisement.serviceUuids[0] in directions) {
-		console.log('Discovered Peripheral : ' + peripheral.uuid + ', Name: ' + peripheral.advertisement.localName + ', Data: ' + peripheral.advertisement.serviceUuids + ', RSSI:' + peripheral.rssi + ', Count:' + dict[peripheral.uuid].count);
+		length = peripheral.advertisement.serviceUuids.length;
+		for (i=0; i < length-1; i++) {
+			peripheral.advertisement.serviceUuids.splice(i);
+		}
+		console.log('Discovered Peripheral : ' + peripheral.uuid + ', Name: ' + peripheral.advertisement.localName + ', Data: ' + peripheral.advertisement.serviceUuids[0] + ', RSSI:' + peripheral.rssi + ', Count:' + dict[peripheral.uuid].count);
 	}
 	
-	if (is_done() == true && peripheral.advertisement.localName != undefined){
+	if (is_done() == true && peripheral.advertisement.localName != undefined && peripheral.advertisement.serviceUuids[0] in directions){
 		console.log(dict);
-		noble.stopScanning();
+		//noble.stopScanning();
 		// requires sudo npm install -g socket.io-client and sudo npm install socket.io-client
 		var io = require('socket.io-client'),
 
@@ -59,9 +63,10 @@ noble.on('discover', function(peripheral) {
 		// this is pushing some data from this client to the server with event described by 'detect'
 		// data is JSON dict style
 		name = peripheral.advertisement.localName;
+
 		socket.emit('detect', {'beacon': beacon_name, 'car_name': name, 'average_rssi': dict[peripheral.uuid].average, 'direction': peripheral.advertisement.serviceUuids[0]});
 		dict = {}
-		noble.startScanning([],true);
+		//noble.startScanning([],true);
 		
 
 	}
