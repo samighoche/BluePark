@@ -27,3 +27,23 @@ bleno.on('advertisingStart', function() {
 bleno.on('advertisingStop', function() { 
   console.log('on -> advertisingStop');  
 });
+
+function checkDirection(event){
+  switch(event.keycode){
+    case 37:
+      alert('left');
+      break;
+    case 38:
+      alert('up');
+      break;
+    case 39:
+      alert('right');
+      break;
+    case 40:
+      alert('down');
+      break;
+    
+  }
+};
+    
+document.onkeydown = checkDirection;
