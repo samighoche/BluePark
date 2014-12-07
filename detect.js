@@ -57,7 +57,7 @@ noble.on('discover', function(peripheral) {
 		for (i=0; i < length-1; i++) {
 			peripheral.advertisement.serviceUuids.splice(i);
 		}
-		console.log('Discovered Peripheral : ' + peripheral.uuid + ', Name: ' + peripheral.advertisement.localName + ', Data: ' + peripheral.advertisement.serviceUuids[0] + ', RSSI:' + peripheral.rssi + ', Count:' + dict[peripheral.uuid].count);
+		//console.log('Discovered Peripheral : ' + peripheral.uuid + ', Name: ' + peripheral.advertisement.localName + ', Data: ' + peripheral.advertisement.serviceUuids[0] + ', RSSI:' + peripheral.rssi + ', Count:' + dict[peripheral.uuid].count);
 	}
 	else {
 		if (peripheral.advertisement.localName != undefined) {
@@ -66,14 +66,16 @@ noble.on('discover', function(peripheral) {
 	}
 	
 	if (is_done() == true && peripheral.advertisement.localName != undefined && peripheral.advertisement.serviceUuids[0] in directions){
-		console.log(dict);
 		
 		// this is pushing some data from this client to the server with event described by 'detect'
 		// data is JSON dict style
 		name = peripheral.advertisement.localName;
 		if (!(name in last_direction) || last_direction[name] != peripheral.advertisement.serviceUuids[0]) {
-			socket.emit('detect', {'beacon': beacon_name, 'car_name': name, 'average_rssi': dict[peripheral.uuid].average, 'direction': peripheral.advertisement.serviceUuids[0]});
+			emission = {'beacon': beacon_name, 'car_name': name, 'average_rssi': dict[peripheral.uuid].average, 'direction': peripheral.advertisement.serviceUuids[0]}
+			socket.emit('detect', emission);
 			last_direction[name] = peripheral.advertisement.serviceUuids[0]
+			console.log("emitted!", emission);
+		
 			dict = {}
 		}	
 		//noble.startScanning([],true);
