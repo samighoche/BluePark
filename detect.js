@@ -30,15 +30,18 @@ noble.on('discover', function(peripheral) {
 			dict[peripheral.uuid].average = (dict[peripheral.uuid].average*k - dict[peripheral.uuid].list[dict[peripheral.uuid].count-k-1] + peripheral.rssi)/k;
 		}
 		else {
-			dict[peripheral.uuid].average = (dict[peripheral.uuid].average*(dict[peripheral.uuid].count-1) + peripheral.rssi)/dict[peripheral.uuid].count;	
+			dict[peripheral.uuid].average = (dict[peripheral.uuid].average*(dict[peripheral.uuid].count-1) + peripheral.rssi)/dict[peripheral.uuid].count;					
 		}
 		
 	}
 	else {
-		dict[peripheral.uuid] = {'list': [peripheral.rssi], 'average':peripheral.rssi, 'count':1};
+		if (peripheral.advertisement.localName != undefined) {
+			dict[peripheral.uuid] = {'list': [peripheral.rssi], 'average':peripheral.rssi, 'count':1};	
+		}
 	}
-	console.log('Discovered Peripheral : ' + peripheral.uuid + 'Data : ' + peripheral.advertisement.serviceData[data] + ' RSSI:' + peripheral.rssi + 'count:' + dict[peripheral.uuid].count);
-
+	if (peripheral.advertisement.localName != undefined) {
+		console.log('Discovered Peripheral : ' + peripheral.uuid + ', Name: ' + peripheral.advertisement.localName + ', Data: ' + peripheral.advertisement.serviceUuids + ', RSSI:' + peripheral.rssi + ', Count:' + dict[peripheral.uuid].count);
+	}
 	if (is_done() == true){
 		console.log(dict);
 		noble.stopScanning();
