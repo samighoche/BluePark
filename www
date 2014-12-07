@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+var debug = require('debug')('server');
+var app = require('../app');
+
+closest_beacon = {}
+app.set('port', process.env.PORT || 3000);
+
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+
+var io = require('socket.io').listen(8080);
+io.on('connection', function (socket) {
+  socket.on('detect', function (data) {
+  	if (!(data['car_name'] in closest_beacon)) {
+  		closest_beacon[data['car_name']] = {average_rssi: data['average_rssi'], beacon: data['beacon'], direction: data['direction']};
+  	}
+  	else {
+  		if (data['direction'] != closest_beacon[data['car_name']]['direction']) {
+  			closest_beacon[data['car_name']] = {average_rssi: data['average_rssi'], beacon: data['beacon'], direction: data['direction']};
+  		}
+  		else {
+  			if (parseInt(data['average-rssi']) > parseInt(closest_beacon[data['car_name']]['average_rssi'])) {
+  				closest_beacon[data['car_name']] = {average_rssi: data['average_rssi'], beacon: data['beacon'], direction: data['direction']};
+  			}	
+  		}
+  		 
+  	}
+  	io.emit('updatemap', {updatedata:{car_name: data['car_name'], closest_beacon: closest_beacon[data['car_name']]['beacon'], direction: closest_beacon[data['car_name']]['direction']}});
+  	
+        
+});
+});
