@@ -58,6 +58,11 @@ noble.on('discover', function(peripheral) {
 		}
 		console.log('Discovered Peripheral : ' + peripheral.uuid + ', Name: ' + peripheral.advertisement.localName + ', Data: ' + peripheral.advertisement.serviceUuids[0] + ', RSSI:' + peripheral.rssi + ', Count:' + dict[peripheral.uuid].count);
 	}
+	else {
+		if (peripheral.advertisement.localName != undefined) {
+			peripheral.advertisement.serviceUuids.splice(0);
+		}
+	}
 	
 	if (is_done() == true && peripheral.advertisement.localName != undefined && peripheral.advertisement.serviceUuids[0] in directions){
 		console.log(dict);
