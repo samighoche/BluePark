@@ -1,7 +1,7 @@
 var noble = require('noble');
 var request = require('request');
 var beacon_name = "1"
-var direction = "12100000000000000000000000000000"
+var directions = {"10000000000000000000000000000000": "up", "20000000000000000000000000000000": "down"}
 var dict = {};
 var k = 10;
 noble.on('stateChange', function(state) {
@@ -36,11 +36,11 @@ noble.on('discover', function(peripheral) {
 		
 	}
 	else {
-		if (peripheral.advertisement.localName != undefined && peripheral.advertisement.serviceUuids[0] == direction) {
+		if (peripheral.advertisement.localName != undefined && peripheral.advertisement.serviceUuids[0] in directions) {
 			dict[peripheral.uuid] = {'list': [peripheral.rssi], 'average':peripheral.rssi, 'count':1};	
 		}
 	}
-	if (peripheral.advertisement.localName != undefined) {
+	if (peripheral.advertisement.localName != undefined && peripheral.advertisement.serviceUuids[0] in directions) {
 		console.log('Discovered Peripheral : ' + peripheral.uuid + ', Name: ' + peripheral.advertisement.localName + ', Data: ' + peripheral.advertisement.serviceUuids + ', RSSI:' + peripheral.rssi + ', Count:' + dict[peripheral.uuid].count);
 	}
 	
@@ -60,6 +60,9 @@ noble.on('discover', function(peripheral) {
 		// data is JSON dict style
 		name = peripheral.advertisement.localName;
 		socket.emit('detect', {'beacon': beacon_name, 'car_name': name, 'average_rssi': dict[peripheral.uuid].average, 'direction': peripheral.advertisement.serviceUuids[0]});
+		dict = {}
+		noble.startScanning([],true);
+		
 
 	}
 });
