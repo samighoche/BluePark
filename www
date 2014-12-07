@@ -20,7 +20,7 @@ io.on('connection', function (socket) {
   			closest_beacon[data['car_name']] = {average_rssi: data['average_rssi'], beacon: data['beacon'], direction: data['direction']};
   		}
   		else {
-  			if (parseInt(data['average-rssi']) > parseInt(closest_beacon[data['car_name']]['average_rssi'])) {
+  			if (parseInt(data['average_rssi']) > parseInt(closest_beacon[data['car_name']]['average_rssi'])) {
   				closest_beacon[data['car_name']] = {average_rssi: data['average_rssi'], beacon: data['beacon'], direction: data['direction']};
   			}	
   		}
