@@ -13,7 +13,7 @@ bleno.on('stateChange', function(state) {
         console.log(buffer);                                              
                                                                           
         var scandata = new Buffer(16)                                     
-    bleno.startAdvertising('Samig', ['12100000000000000000000000000000']);
+    bleno.startAdvertising('Car01', ['12100000000000000000000000000000']);
                                          
   } else {                               
     bleno.stopAdvertising();             
@@ -27,23 +27,3 @@ bleno.on('advertisingStart', function() {
 bleno.on('advertisingStop', function() { 
   console.log('on -> advertisingStop');  
 });
-
-function checkDirection(event){
-  switch(event.keycode){
-    case 37:
-      alert('left');
-      break;
-    case 38:
-      alert('up');
-      break;
-    case 39:
-      alert('right');
-      break;
-    case 40:
-      alert('down');
-      break;
-    
-  }
-};
-    
-document.onkeydown = checkDirection;

@@ -1,6 +1,6 @@
 var noble = require('noble');
 var request = require('request');
-var beacon_name = "david's beacon"
+var beacon_name = "1"
 var direction = "12100000000000000000000000000000"
 var dict = {};
 var k = 10;
@@ -36,7 +36,6 @@ noble.on('discover', function(peripheral) {
 		
 	}
 	else {
-		console.log()
 		if (peripheral.advertisement.localName != undefined && peripheral.advertisement.serviceUuids[0] == direction) {
 			dict[peripheral.uuid] = {'list': [peripheral.rssi], 'average':peripheral.rssi, 'count':1};	
 		}
@@ -45,7 +44,7 @@ noble.on('discover', function(peripheral) {
 		console.log('Discovered Peripheral : ' + peripheral.uuid + ', Name: ' + peripheral.advertisement.localName + ', Data: ' + peripheral.advertisement.serviceUuids + ', RSSI:' + peripheral.rssi + ', Count:' + dict[peripheral.uuid].count);
 	}
 	
-	if (is_done() == true){
+	if (is_done() == true && peripheral.advertisement.localName != undefined){
 		console.log(dict);
 		noble.stopScanning();
 		// requires sudo npm install -g socket.io-client and sudo npm install socket.io-client
@@ -60,7 +59,7 @@ noble.on('discover', function(peripheral) {
 		// this is pushing some data from this client to the server with event described by 'detect'
 		// data is JSON dict style
 		name = peripheral.advertisement.localName;
-		socket.emit('detect', {'beacon': beacon_name, 'car name': name, 'average-rssi': dict[peripheral.uuid].average, 'direction': peripheral.advertisement.serviceUuids[0]});
+		socket.emit('detect', {'beacon': beacon_name, 'car_name': name, 'average_rssi': dict[peripheral.uuid].average, 'direction': peripheral.advertisement.serviceUuids[0]});
 
 	}
 });
