@@ -13,7 +13,7 @@ var io = require('socket.io').listen(8080);
 io.on('connection', function (socket) {
   socket.on('detect', function (data) {
   	if (!(data['car_name'] in closest_beacon)) {
-  		closest_beacon[data['car_name']] = {average_rssi: data['average_rssi'], beacon: data['beacon'], direction: data['direction']};
+  		closest_beacon[data['car_name']] = {average_rssi: data['average_rssi'], beacon: "0", direction: data['direction']};
   	}
   	else {
   		if (data['direction'] != closest_beacon[data['car_name']]['direction']) {
