@@ -1,3 +1,4 @@
+// required libraries
 var bleno = require('bleno');              
 var keypress = require('keypress');                             
 
@@ -8,11 +9,13 @@ left = 3
 right = 4
  */
 
+// default direction is up
 var key_val = "1";
 
 
 console.log('bleno - iBeacon');              
-                                             
+
+// when bluetooth is available, start advertising car details                                             
 bleno.on('stateChange', function(state) {    
   console.log('on -> stateChange: ' + state);
                                        
@@ -24,6 +27,7 @@ bleno.on('stateChange', function(state) {
   }                                      
 });
 
+// log that advertising is taking place
 bleno.on('advertisingStart', function() {                                 
   console.log('on -> advertisingStart'); 
 });                                      
@@ -32,10 +36,10 @@ bleno.on('advertisingStop', function() {
   console.log('on -> advertisingStop');  
 });
 
-
-
-
+/* this code is to manually update the direction of the car via the terminal
+// at run time, such that we could simulate the car turning corners
 // make `process.stdin` begin emitting "keypress" events
+*/
 keypress(process.stdin);
 
 // listen for the "keypress" event
