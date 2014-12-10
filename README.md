@@ -21,12 +21,12 @@ All the code was written by us. We made extensive use of Node.js and the followi
 - We use Noble to receive the broadcasts, identify the sender through its "UUID", and read the payload.
 
 #### Overview of the files:
-* 'detect.js':
+* `detect.js`:
 This file is run on the beacon's strategically placed in the parking lot.
 It contains each beacon's unique ID, direction, and is listening for suitable vehicle's advertising packets.
 Upon detecting k=10 packets from a specific car's UUID, it will forward this data to the server via a websocket.
 
-* 'car-broadcast.js':
+* `car-broadcast.js`:
 This file is responsible for the car advertising itself to the BluePark system, and is thus run on the vehicle.
 It is set up such that it will advertise its name, and its direction info in its payload that is currently specified by
 the user manually during run time via "UP", "DOWN", "LEFT", "RIGHT", arrows in the terminal.
@@ -34,3 +34,28 @@ the user manually during run time via "UP", "DOWN", "LEFT", "RIGHT", arrows in t
 #### Useful Links: 
 
 A video demo of our system can be found here: [BluePark Demo]()
+
+
+#### License:
+
+The MIT License (MIT)
+
+Copyright (c) {{{2014}}} {{{DAVID BOONE, ANA-MARIA CONSTANTIN, SAMI GHOCHE and BENJY LEVIN}}}
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
