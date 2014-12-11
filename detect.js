@@ -19,7 +19,7 @@ var k = 10;
 var io = require('socket.io-client'),
 
     // connects to the cloud server controller
-    socket = io.connect('http://bleboys.cloudapp.net:8080');
+    socket = io.connect('http://bluepark.cloudapp.net:8080');
 
 // on successfull connection print this
 socket.on('connect', function() {

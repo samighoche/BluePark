@@ -45,6 +45,8 @@ This is the node file that is the brains of the server. It handles all the incom
 This folder contains all publicly available files on the webpage, such as html, images, css etc.
 It contains `index.html` which is our GUI, and is used for the demo purpose of moving the graphic of the vehicle based on received closest beacon.
 
+The server will be running until the end of December 2014 on [BLUEPARK](bluepark.cloudapp.net:3000).
+
 #### Useful Links: 
 
 A video demo of our system can be found here: [BluePark Demo]()
