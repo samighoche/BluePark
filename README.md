@@ -48,6 +48,7 @@ It contains `index.html` which is our GUI, and is used for the demo purpose of m
 #### Useful Links: 
 
 A video demo of our system can be found here: [BluePark Demo]()
+
 A set of instrutions compiled by us, on how one can go about setting up an Intel Edison to use with BLE (BlueZ, Bleno, Noble) on the Harvard network can be found [here](https://docs.google.com/a/college.harvard.edu/document/d/1iR57Iap1c571q3fuHhdqiF4heln8tEoL8VupF8XeqZY/edit?usp=sharing)
 
 #### License:

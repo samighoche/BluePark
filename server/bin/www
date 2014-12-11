@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 var debug = require('debug')('server');
 var app = require('../app');
 
@@ -7,37 +8,54 @@ closest_beacon = {}
 app.set('port', process.env.PORT || 3000);
 
 var server = app.listen(app.get('port'), function() {
-  debug('Express server listening on port ' + server.address().port);
+    debug('Express server listening on port ' + server.address().port);
 });
 
 // create the socket.io server connection on port 8080
 var io = require('socket.io').listen(8080);
 
 // when a connection is made to the socket.io server
-io.on('connection', function (socket) {
-  // check for a detect event from the beacons
-  socket.on('detect', function (data) {
-    // if we don't have an entry for this car in the server -- add one  
-  	if (!(data['car_name'] in closest_beacon)) {
-  		closest_beacon[data['car_name']] = {average_rssi: data['average_rssi'], beacon: "0", direction: data['direction']};
-  	}
-    // otherwise
-  	else {
-      // logic for handling the closest appropriate beacon based on RSSI and direction
-  		if (data['direction'] != closest_beacon[data['car_name']]['direction']) {
-  			closest_beacon[data['car_name']] = {average_rssi: data['average_rssi'], beacon: data['beacon'], direction: data['direction']};
-  		}
-  		else {
-  			if (parseInt(data['average_rssi']) > parseInt(closest_beacon[data['car_name']]['average_rssi'])) {
-  				closest_beacon[data['car_name']] = {average_rssi: data['average_rssi'], beacon: data['beacon'], direction: data['direction']};
-  			}	
-  		}
-  		 
-  	}
-	console.log("server receives this and is about to emit")
-  // emit an updatemap event so that the GUI displays the correct directions
-  	io.emit('updatemap', {updatedata:{car_name: data['car_name'], closest_beacon: closest_beacon[data['car_name']]['beacon'], direction: closest_beacon[data['car_name']]['direction']}});
-  	
-        
-});
+io.on('connection', function(socket) {
+    // check for a detect event from the beacons
+    socket.on('detect', function(data) {
+        // if we don't have an entry for this car in the server -- add one  
+        if (!(data['car_name'] in closest_beacon)) {
+            closest_beacon[data['car_name']] = {
+                average_rssi: data['average_rssi'],
+                beacon: "0",
+                direction: data['direction']
+            };
+        }
+        // otherwise
+        else {
+            // logic for handling the closest appropriate beacon based on RSSI and direction
+            if (data['direction'] != closest_beacon[data['car_name']]['direction']) {
+                closest_beacon[data['car_name']] = {
+                    average_rssi: data['average_rssi'],
+                    beacon: data['beacon'],
+                    direction: data['direction']
+                };
+            } else {
+                if (parseInt(data['average_rssi']) > parseInt(closest_beacon[data['car_name']]['average_rssi'])) {
+                    closest_beacon[data['car_name']] = {
+                        average_rssi: data['average_rssi'],
+                        beacon: data['beacon'],
+                        direction: data['direction']
+                    };
+                }
+            }
+
+        }
+        console.log("server receives this and is about to emit")
+            // emit an updatemap event so that the GUI displays the correct directions
+        io.emit('updatemap', {
+            updatedata: {
+                car_name: data['car_name'],
+                closest_beacon: closest_beacon[data['car_name']]['beacon'],
+                direction: closest_beacon[data['car_name']]['direction']
+            }
+        });
+
+
+    });
 });
