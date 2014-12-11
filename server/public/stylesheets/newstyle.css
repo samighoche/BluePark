@@ -1,0 +1,72 @@
+div#main{
+background-repeat: no-repeat;
+/*width: 1000px;
+height:906px;*/
+}
+body
+{
+background-color: rgb(65,65,65);
+/*width:725px;
+height:906px;*/
+
+}
+head{
+width:0px;
+height:0px;
+
+}
+img#backimage{
+display: visible;
+position: absolute;
+z-index:-100;
+width: 725px;
+height:800px;
+left: 350px;
+top: 0px;
+}
+img#car{
+display:visible;
+position: absolute;
+left: 430px;
+top: 673px;
+width 50px;
+height: 55px;
+-webkit-transform: rotate(90deg);
+}
+
+img#edison1{
+display: visible;
+position: absolute;
+left: 656px;
+top: 645px;
+height:82px;
+width:109px;
+}
+
+img#edison2{
+display:visible;
+position: absolute;
+left: 656px;
+top: 50px;
+height: 82px;
+width:109px;
+
+}
+
+img#edison3{
+display:visible;
+left:287px;
+position: absolute;
+top:360px;
+height:82px;
+width:109px;
+}
+
+img#edison4{
+display:visible;
+position: absolute;
+left:1012px;
+top:360px;
+height:82px;
+width:109px;
+}
