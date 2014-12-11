@@ -15,6 +15,7 @@
 }
 </style>
 <div id="main">
+<!-- main div and images -->
 <canvas id="myCanvas" width="2000", height="1000"></canvas>
 
 <img src ="/images/filled_lot.png" width="725px" height="800px" id="backimage">
@@ -26,11 +27,13 @@
 <img src="/images/car.png" alt="car" class="carclass" id="car">
 </div> 
 
+<!-- libraries -->
 <link rel="stylesheet" type="text/css" href="/stylesheets/newstyle.css">
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
 <script src="javascripts/move.js"></script>
     <script>
+    // script for demo and moving the cars
       var socket = io.connect('http://bleboys.cloudapp.net:8080');
       var c = document.getElementById("myCanvas");
       var ctx = c.getContext("2d");
@@ -38,9 +41,10 @@
 	/*var car = move('#car')
 		.duration(300000);*/
 	
-      socket.on('updatemap', function (data) {
+	// on update map event, move car appropriately based on closest beacon and desired path
+    socket.on('updatemap', function (data) {
 	console.log(data); 
-	console.log("blahh");
+	console.log("updatemap event received");
 	switch (data.updatedata.closest_beacon) {
 	case "0":
 		console.log("0");
@@ -58,7 +62,7 @@
 	    break;
 	case "1":
 	    /*$("#car").css({"display":"initial","left":"100px","top":"20px","z-index":"100"});*/ 
-      	     console.log("1");
+      	console.log("1");
 		car
 		.rotate(90)
 		.duration('12s')

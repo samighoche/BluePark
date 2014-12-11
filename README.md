@@ -22,19 +22,33 @@ All the code was written by us. We made extensive use of Node.js and the followi
 
 #### Overview of the files:
 * `detect.js`:
-This file is run on the beacon's strategically placed in the parking lot.
+This file is run on the beacons strategically placed in the parking lot.
 It contains each beacon's unique ID, direction, and is listening for suitable vehicle's advertising packets.
 Upon detecting k=10 packets from a specific car's UUID, it will forward this data to the server via a websocket.
+This is simply run on the beacon by typing ```node detect.js```
 
 * `car-broadcast.js`:
 This file is responsible for the car advertising itself to the BluePark system, and is thus run on the vehicle.
 It is set up such that it will advertise its name, and its direction info in its payload that is currently specified by
 the user manually during run time via "UP", "DOWN", "LEFT", "RIGHT", arrows in the terminal.
+This is simply run on the car by typing ```node car-broadcast.js```
+
+* `server`:
+This folder contains the files that are running on the Azure Cloud VM acting as our central controller server. The server was initially setup using `express-generator`, but then was modified and customized to its current state.
+
+To run this server, cd into the home directory and type ```sudo npm start```. The `index.html` will be served to port 3000 on the running machine. The socket.io server will be set up on port 8080 on the running machine.
+
+* `server/bin/www`
+This is the node file that is the brains of the server. It handles all the incoming updates from the beacons and records the closest beacon based on RSSI and direction in the server's dictionary. It then sends updates to the webpage to display the appropriate route and information. 
+
+* `server/public`
+This folder contains all publicly available files on the webpage, such as html, images, css etc.
+It contains `index.html` which is our GUI, and is used for the demo purpose of moving the graphic of the vehicle based on received closest beacon.
 
 #### Useful Links: 
 
 A video demo of our system can be found here: [BluePark Demo]()
-
+A set of instrutions compiled by us, on how one can go about setting up an Intel Edison to use with BLE (BlueZ, Bleno, Noble) on the Harvard network can be found [here](https://docs.google.com/a/college.harvard.edu/document/d/1iR57Iap1c571q3fuHhdqiF4heln8tEoL8VupF8XeqZY/edit?usp=sharing)
 
 #### License:
 
