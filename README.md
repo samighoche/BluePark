@@ -49,7 +49,7 @@ The server will be running until the end of December 2014 on [BLUEPARK](bluepark
 
 #### Useful Links: 
 
-A video demo of our system can be found here: [BluePark Demo]()
+A video demo of our system can be found here: [BluePark Demo](https://www.youtube.com/watch?v=e57hSURO4P0)
 
 A set of instrutions compiled by us, on how one can go about setting up an Intel Edison to use with BLE (BlueZ, Bleno, Noble) on the Harvard network can be found [here](https://docs.google.com/a/college.harvard.edu/document/d/1iR57Iap1c571q3fuHhdqiF4heln8tEoL8VupF8XeqZY/edit?usp=sharing)
 
