@@ -14,7 +14,6 @@ var dict = {};
 // a specific car's RSSI
 var k = 10;
 
-//noble.stopScanning();
 // requires sudo npm install -g socket.io-client and sudo npm install socket.io-client
 var io = require('socket.io-client'),
 
@@ -80,7 +79,6 @@ noble.on('discover', function(peripheral) {
         for (i = 0; i < length - 1; i++) {
             peripheral.advertisement.serviceUuids.splice(i);
         }
-        //console.log('Discovered Peripheral : ' + peripheral.uuid + ', Name: ' + peripheral.advertisement.localName + ', Data: ' + peripheral.advertisement.serviceUuids[0] + ', RSSI:' + peripheral.rssi + ', Count:' + dict[peripheral.uuid].count);
     } else {
         if (peripheral.advertisement.localName != undefined) {
             peripheral.advertisement.serviceUuids.splice(0);
@@ -106,8 +104,6 @@ noble.on('discover', function(peripheral) {
 
             dict = {}
         }
-        //noble.startScanning([],true);
-
 
     }
 });
